@@ -23,8 +23,15 @@ After cloning the repostiry on your machine:
 You can compile and build the project by using the following command line (inside the project): 
 
 ```
-./gradlew 
+./gradlew build
 ```
+
+To run the game:
+
+```
+./gradlew run
+```
+
 
 End with an example of getting some data out of the system or using it for a little demo
 
