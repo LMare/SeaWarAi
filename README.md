@@ -1,4 +1,4 @@
-# SeaWar [![Build Status](https://travis-ci.org/ProjetSeaWar/SeaWar.svg?branch=master)](https://travis-ci.org/ProjetSeaWar/SeaWar)
+# SeaWar
 
 SeaWarAi  is AI project.
 
