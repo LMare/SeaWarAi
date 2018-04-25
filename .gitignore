@@ -1,12 +1,21 @@
 # IntelliJ
 out/
 build/
-.idea/
+.idea/workspace.xml
+.idea/tasks.xml
+*.iml
+*.iws
+*.ipr
 
-#Gradle
-.gradle/
+#Eclipse
+bin/
 /core/bin/
 /desktop/bin/
 .settings/
 /desktop/.settings/
 /core/.settings/
+.classpath
+.project
+
+#Gradle
+.gradle/
