@@ -24,7 +24,6 @@ import fr.lesprogbretons.seawar.model.cases.CaseEau;
 import fr.lesprogbretons.seawar.model.cases.CaseTerre;
 import fr.lesprogbretons.seawar.model.map.Grille;
 import fr.lesprogbretons.seawar.screen.manager.MapManager;
-import fr.lesprogbretons.seawar.screen.ui.EditeurUi;
 import fr.lesprogbretons.seawar.screen.ui.GameUi;
 import fr.lesprogbretons.seawar.screen.ui.Ui;
 import fr.lesprogbretons.seawar.utils.TiledCoordinates;
@@ -32,7 +31,6 @@ import fr.lesprogbretons.seawar.utils.Utils;
 
 import java.util.ArrayList;
 
-import static fr.lesprogbretons.seawar.SeaWar.editeur;
 import static fr.lesprogbretons.seawar.SeaWar.partie;
 import static fr.lesprogbretons.seawar.SeaWar.seaWarController;
 
@@ -86,11 +84,6 @@ public class SeaWarMapScreen extends ScreenAdapter {
                 widthMap = partie.getMap().getLargeur();
                 heightMap = partie.getMap().getHauteur();
                 g = partie.getMap();
-                break;
-            case EDITOR:
-                widthMap = editeur.getMap().getLargeur();
-                heightMap = editeur.getMap().getHauteur();
-                g = editeur.getMap();
                 break;
         }
 
@@ -149,9 +142,6 @@ public class SeaWarMapScreen extends ScreenAdapter {
         switch (manager.getMyUiType()) {
             case GAME:
                 myUi = new GameUi();
-                break;
-            case EDITOR:
-                myUi = new EditeurUi();
                 break;
         }
         manager.setMyUi(myUi);
