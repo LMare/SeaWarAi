@@ -5,3 +5,8 @@ build/
 
 #Gradle
 .gradle/
+/core/bin/
+/desktop/bin/
+.settings/
+/desktop/.settings/
+/core/.settings/
