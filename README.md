@@ -73,11 +73,11 @@ We use [Git](https://git-scm.com/) for versioning. For the versions available, s
 
 * **Les Programmeurs Bretons** - *Initial work* - [ProjetSeaWar](https://github.com/ProjetSeaWar/SeaWar.git)
 
-See also the list of [contributors](https://github.com/AghilasSini/SeaWarAi/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/AghilasSini/SeaWarAi/CONTRIBUTING.md) who participated in this project.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](https://github.com/AghilasSini/SeaWarAi/LICENSE.md) file for details
 
 ## Acknowledgments
 
