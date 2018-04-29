@@ -37,17 +37,6 @@ public class Controller {
         partie = new Partie(g);
     }
 
-    public void startIA() {
-        ia = new IAAleatoire();
-        ia.start();
-    }
-
-    public void stopIA() {
-        if (ia != null) {
-            ia.interrupt();
-            ia = null;
-        }
-    }
 
     /**
      * Procédure qui gère la sélection d'une case quelconque à la souris

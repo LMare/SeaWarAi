@@ -12,8 +12,9 @@ public class Player implements Serializable{
 
     //Nombre de phares qu'il possede
     private int pharesPossedes = 0;
-
-
+    
+    // name of the player
+    private String name;
     /**
      * Constructeur
      * @param number
@@ -23,7 +24,20 @@ public class Player implements Serializable{
     }
 
 
-    //Getters & Setters
+    public Player(int number, String name) {
+		// TODO Auto-generated constructor stub
+    	this.name= name;
+	}
+
+
+    public Object clone() {
+    	
+    	return new Player(this.number);
+    	
+    }
+    
+    
+	//Getters & Setters
     public int getNumber() {
         return number;
     }

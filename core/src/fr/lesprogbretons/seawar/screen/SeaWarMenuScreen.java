@@ -19,11 +19,6 @@ public class SeaWarMenuScreen extends ScreenAdapter {
         //Change here if window is too big for your screen
         //Needs to be the same ratio
         Gdx.graphics.setWindowedMode(800, 480);
-
-        // asini: sorry guys I removed all menu .... no need for AI experiment
-
-        seaWarController.startIA();
-
         seaWarController.nouvellePartie();
 
         game.setScreen(new SeaWarMapScreen(new GameMapManager()));

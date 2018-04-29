@@ -61,7 +61,7 @@ public class GameMapManager implements MapManager {
 
     @Override
     public void update() {
-
+    	partie.launchTurn();
         //On met à jour l'interface
         myUi.setTurn(partie.getTurnCounter());
         myUi.setPlayer(partie.getCurrentPlayer().toString());

@@ -331,8 +331,6 @@ public class SeaWarMapScreen extends ScreenAdapter {
 
     @Override
     public void hide() {
-        //Stop IA
-        seaWarController.stopIA();
         manager.end();
     }
 
