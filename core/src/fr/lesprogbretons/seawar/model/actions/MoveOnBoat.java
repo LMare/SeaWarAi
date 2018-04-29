@@ -33,7 +33,7 @@ public class MoveOnBoat extends Action {
 	@Override
 	public void apply(Partie partie) {
 		
-		System.out.println("Move the selected boat");
+		//System.out.println("Move the selected boat");
 		int cantPlay = 0;
         Random rnd = new Random();
 
@@ -42,7 +42,7 @@ public class MoveOnBoat extends Action {
         for (Boat b : boats) {
         	//
         	if (b.getMoveAvailable() == 0 || partie.getMap().getCasesDisponibles(b.getPosition(), 1).isEmpty()) cantPlay++;
-            logger.debug("Nb : " + cantPlay);
+            //logger.debug("Nb : " + cantPlay);
         }
 
         if (cantPlay == boats.size()) {
@@ -56,7 +56,7 @@ public class MoveOnBoat extends Action {
                 } while (partie.getMap().getCasesDisponibles(b.getPosition(), 1).isEmpty() || b.getMoveAvailable() == 0);
                 seaWarController.selection(b.getPosition().getX(), b.getPosition().getY());
                 selectedTile.setCoords(b.getPosition().getY(), b.getPosition().getX());
-                logger.debug("IAAleatoire sélection : " + b.getPosition().getX() + ";" + b.getPosition().getY());
+              //  logger.debug("IAAleatoire sélection : " + b.getPosition().getX() + ";" + b.getPosition().getY());
 
             } else {
                 Boat boat = partie.getBateauSelectionne();
@@ -66,7 +66,7 @@ public class MoveOnBoat extends Action {
                     //On se déplace
                     seaWarController.selection(cases.get(nb).getX(), cases.get(nb).getY());
                     selectedTile.setCoords(cases.get(nb).getY(), cases.get(nb).getX());
-                    logger.debug("IAAleatoire déplacement : " + cases.get(nb).getX() + ";" + cases.get(nb).getY());
+                  //  logger.debug("IAAleatoire déplacement : " + cases.get(nb).getX() + ";" + cases.get(nb).getY());
                 } else {
                     //Si on ne peut plus se déplacer
                     partie.unselectBateau();
@@ -76,7 +76,7 @@ public class MoveOnBoat extends Action {
                     int nb = rnd.nextInt(boatInRange.size());
                     seaWarController.selection(boatInRange.get(nb).getX(), boatInRange.get(nb).getY());
                     selectedTile.setCoords(boatInRange.get(nb).getY(), boatInRange.get(nb).getX());
-                    logger.debug("IAAleatoire coup : " + boatInRange.get(nb).getX() + ";" + boatInRange.get(nb).getY());
+                   // logger.debug("IAAleatoire coup : " + boatInRange.get(nb).getX() + ";" + boatInRange.get(nb).getY());
                 }
             }
         }
