@@ -73,11 +73,8 @@ We use [Git](https://git-scm.com/) for versioning. For the versions available, s
 
 * **Les Programmeurs Bretons** - *Initial work* - [ProjetSeaWar](https://github.com/ProjetSeaWar/SeaWar.git)
 
-<<<<<<< HEAD
-See also the list of [contributors](./CONTRIBUTING.md) who participated in this project.
-=======
+
 See also the list of [contributors](https://github.com/AghilasSini/SeaWarAi/CONTRIBUTING.md) who participated in this project.
->>>>>>> 9978976cfb274b419c15206fd542dd71dd42f26f
 
 ## License
 
