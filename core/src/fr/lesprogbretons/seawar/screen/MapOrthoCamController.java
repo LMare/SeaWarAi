@@ -51,7 +51,6 @@ public class MapOrthoCamController extends InputAdapter {
         finalPos.x = xMap / 2f;
         finalPos.y = yMap / 2f;
 
-        //TODO Changer par un truc qui se base sur la largeur/hauteur de la map < au truc visible
         if (finalPos.x > finalPos.y) {
             minZoom = MathUtils.ceil(1.06f * widthMap) / 10f;
         } else {

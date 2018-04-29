@@ -1,6 +1,5 @@
 package fr.lesprogbretons.seawar.screen.ui;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -46,11 +45,10 @@ public class GameUi extends Ui {
 
         //region Buttons
         TextButton optionsButton = new TextButton("Options", skin, "default");
-        TextButton saveButton = new TextButton("Save", skin, "default");
         TextButton endTurnButton = new TextButton("End Turn", skin, "default");
         TextButton hideButton = new TextButton("Hide", skin, "default");
         TextButton showButton = new TextButton("Show", skin, "default");
-        TextButton menuButton = new TextButton("Menu", skin, "default");
+        TextButton restart = new TextButton("Restart", skin, "default");
         TextButton dismissButton = new TextButton("Dismiss", skin, "default");
 
         optionsButton.addListener(new ClickListener() {
@@ -61,40 +59,12 @@ public class GameUi extends Ui {
                 d.getContentTable().row();
                 d.getContentTable().add(new Label("Volume: ", skin, "default"));
                 d.getContentTable().add(slider).row();
-                d.button(saveButton)
-                        .button(menuButton)
+                d.button(restart)
                         .button(dismissButton, false)
                         .show(s);
                 openedDialog = d;
                 hideDialog = null;
             }
-        });
-
-
-        saveButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-
-                TextField nompartie = new TextField("", skin);
-                Dialog d = new Dialog("Nom de la partie", skin, "dialog")
-                        .text("Choisissez le nom de votre sauvegarde :");
-
-                TextButton validerButton = new TextButton("Sauvegarder", skin, "default");
-                validerButton.addListener(new ClickListener() {
-                    public void clicked(InputEvent event, float x, float y) {
-                        seaWarController.save(nompartie.getText());
-
-                    }
-                });
-                d.getContentTable().row();
-                d.getContentTable().add(nompartie);
-                d.button(validerButton, true);
-                d.button(dismissButton, false);
-                d.show(s);
-                openedDialog = d;
-                hideDialog = null;
-            }
-
         });
 
         endTurnButton.addListener(new ClickListener() {
@@ -106,7 +76,7 @@ public class GameUi extends Ui {
                     if (partie.isFin()) {
                         d = new Dialog("The winner is " + partie.getWinner().toString(), skin, "dialog")
                                 .text(partie.getWinner().toString() + " wins by " + partie.getVictoryType().toString())
-                                .button(menuButton, true)
+                                .button(restart, true)
                                 .show(s);
                         openedDialog = d;
                         hideDialog = d;
@@ -142,7 +112,7 @@ public class GameUi extends Ui {
             }
         });
 
-        menuButton.addListener(new ClickListener() {
+        restart.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new SeaWarMenuScreen());
