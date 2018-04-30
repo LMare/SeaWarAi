@@ -62,32 +62,31 @@ public class RandomMap extends Grille{
         bateaux1.add(new Amiral(tableau[posAmiralXJ1][posAmiralYJ1], getJoueur1()));
         bateaux1.get(0).setOrientation(Orientation.SUDEST);
         
-        bateaux1.add(new Fregate(tableau[posFregXJ1][posFregYJ1], getJoueur1()));
-        bateaux1.get(1).setOrientation(Orientation.SUDEST);
+        //bateaux1.add(new Fregate(tableau[posFregXJ1][posFregYJ1], getJoueur1()));
+        //bateaux1.get(1).setOrientation(Orientation.SUDEST);
 
         int absPosAmiralJ1=posAmiralXJ1+hauteur*posAmiralYJ1;
         freeCases.remove(absPosAmiralJ1);
-		int absPosFregJ1=posFregXJ1+hauteur*posFregYJ1;
-		freeCases.remove(absPosFregJ1);
+		//int absPosFregJ1=posFregXJ1+hauteur*posFregYJ1;
+		//freeCases.remove(absPosFregJ1);
 		
 		
         
         
         bateaux2.add(new Amiral(tableau[posAmiralXJ2][posAmiralYJ2], getJoueur2()));
         bateaux2.get(0).setOrientation(Orientation.NORDOUEST);
-        bateaux2.add(new Fregate(tableau[posFregXJ2][posFregYJ2], getJoueur2()));
-        bateaux2.get(1).setOrientation(Orientation.NORDOUEST);
+        //bateaux2.add(new Fregate(tableau[posFregXJ2][posFregYJ2], getJoueur2()));
+        //bateaux2.get(1).setOrientation(Orientation.NORDOUEST);
 		
         int absPosAmiralJ2=hauteur*posAmiralYJ2+posAmiralXJ2;
         freeCases.remove(absPosAmiralJ2);
-		int absPosFregJ2=hauteur*posFregYJ2+posFregXJ2;
-		freeCases.remove(absPosFregJ2);
+		//int absPosFregJ2=hauteur*posFregYJ2+posFregXJ2;
+		//freeCases.remove(absPosFregJ2);
 		
 		for (int i=0;i<nbrLightHouse;i++) {
 			int iPhare=(int) (Math.random() * (freeCases.size() - 0.01));
 			int xPhare   = (int) Math.ceil((freeCases.get(iPhare)-largeur)/hauteur);
 			int yPhare   = (int) Math.ceil(freeCases.get(iPhare)%hauteur);
-			System.out.println(" Phare "+ freeCases.get(iPhare)+" x "+ xPhare+" y "+yPhare);
 			if (xPhare<0) {xPhare=0;}
 			if (yPhare<0) {yPhare=0;}
 			tableau[yPhare][xPhare].setPhare(true);
@@ -102,8 +101,6 @@ public class RandomMap extends Grille{
 			int yTerre   = (int) Math.ceil(freeCases.get(iTerre)%hauteur);
 			if (xTerre<0) {xTerre=0;}
 			if (yTerre<0) {yTerre=0;}
-			
-			System.out.println(""+freeCases.get(iTerre)+" x "+ xTerre+" y "+yTerre);
 			tableau[yTerre][xTerre]=new CaseTerre(yTerre,xTerre);
 			freeCases.remove(freeCases.get(iTerre));
 			

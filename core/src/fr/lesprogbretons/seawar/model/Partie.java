@@ -4,16 +4,21 @@ import fr.lesprogbretons.seawar.ia.AbstractIA;
 import fr.lesprogbretons.seawar.ia.IAAleatoire;
 import fr.lesprogbretons.seawar.ia.IAThread;
 import fr.lesprogbretons.seawar.model.actions.Action;
-import fr.lesprogbretons.seawar.model.actions.MoveOnBoat;
+import fr.lesprogbretons.seawar.model.actions.MoveBoat;
 import fr.lesprogbretons.seawar.model.actions.PassTurn;
-import fr.lesprogbretons.seawar.model.actions.Shooter;
+import fr.lesprogbretons.seawar.model.actions.Attack;
 import fr.lesprogbretons.seawar.model.boat.Boat;
+import fr.lesprogbretons.seawar.model.cases.Case;
 import fr.lesprogbretons.seawar.model.map.Grille;
 import fr.lesprogbretons.seawar.model.map.RandomMap;
+
+import static fr.lesprogbretons.seawar.SeaWar.seaWarController;
+import static fr.lesprogbretons.seawar.screen.SeaWarMapScreen.selectedTile;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -79,7 +84,6 @@ public class Partie implements Serializable {
     
     
     public Object clone() {
-    	
     	return new Partie();
     }
     
@@ -115,6 +119,10 @@ public class Partie implements Serializable {
         return joueur2;
     }
 
+    
+  
+    
+    
     public int getTurnCounter() {
         return turnCounter;
     }
@@ -480,11 +488,11 @@ public class Partie implements Serializable {
     	if (action instanceof PassTurn) {
     		return true;
     		
-    	}else if(action instanceof MoveOnBoat){
+    	}else if(action instanceof MoveBoat){
     		
     		return true;
     		
-    	}else if(action instanceof Shooter) {
+    	}else if(action instanceof Attack) {
     		
     		return true;
     	}
@@ -492,20 +500,35 @@ public class Partie implements Serializable {
     		return false;
     	}
 	}
+    
+    
+    
+    
+    
+    
 
 	public List<Action> getPossibleActions() {
     		List<Action> actions =new ArrayList<Action>();
-    		// Passer son tour
-    		//actions.add(new PassTurn(this,this.getBateauSelectionne()));
-    	
-    		
-    		// Deplacer un bateau
-    		actions.add(new MoveOnBoat());
-    	
-    	
-    		//tir sur un bateau "si il y a un navire enemie"
-			//actions.add(new Shooter(this,this.getBateauSelectionne()));
-			
+    		Boat boat = this.getBateauSelectionne();
+            // potential of the seletected boat   
+    		ArrayList<Case> cases = this.getMap().getCasesDisponibles(boat.getPosition(), 1);
+    		if (!cases.isEmpty()) {
+            for (Case target:cases) {
+                        actions.add(new MoveBoat(boat, target));
+            	}                       
+            }
+            // attack possibilities
+//            ArrayList<Case> boatInRange = this.getMap().getBoatInRange(boat, this.getOtherPlayer());
+//             if (!boatInRange.isEmpty() && boat.canShoot()) {
+//            	 for (Case target: boatInRange) {
+//            		 actions.add(new Attack(boat,target));
+//            	 }
+//             }
+//
+//             // pass the turn without doing nothing
+//             actions.add(new PassTurn(boat));
+            
+               
 			return actions;
     }
     
