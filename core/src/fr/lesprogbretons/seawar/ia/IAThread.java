@@ -1,13 +1,17 @@
 package fr.lesprogbretons.seawar.ia;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.lesprogbretons.seawar.model.Partie;
 import fr.lesprogbretons.seawar.model.actions.Action;
-import fr.lesprogbretons.seawar.model.cases.CaseEau;
-
+import fr.lesprogbretons.seawar.model.actions.PassTurn;
+import fr.lesprogbretons.seawar.model.boat.Boat;
+import static fr.lesprogbretons.seawar.SeaWar.seaWarController;
+import static fr.lesprogbretons.seawar.screen.SeaWarMapScreen.selectedTile;
 public class IAThread extends Thread{
 
 	
@@ -39,7 +43,42 @@ public class IAThread extends Thread{
       while (true) {
           try {
         	  // action choisie
-                 choosedAction=ia.chooseAction((Partie)partie.clone());
+        	  
+        	  List<Boat> boats=null;
+        	  if(ia.getNumber()==2) {
+        		  boats=partie.getMap().getBateaux2();
+        		  
+        	  }
+        	  else {
+        		  boats=partie.getMap().getBateaux1();
+        	  }
+      
+              int cantPlay=0;
+        	  
+        	  for (Boat boat : boats) {
+              	//
+              	if (boat.getMoveAvailable() == 0 || partie.getMap().getCasesDisponibles(boat.getPosition(), 1).isEmpty()) cantPlay++;
+                  //logger.debug("Nb : " + cantPlay);
+              }
+        	  
+        	  if (cantPlay == boats.size()) {
+        		  seaWarController.endTurn();
+        	  }
+        	  
+        	  if (!partie.isAnyBateauSelectionne()) {
+        		  int index=0;
+        		  Boat boat=boats.get(index);
+        	    
+        	  do {
+        		  
+        		  	
+        			partie.setBateauSelectionne(boat);
+        			choosedAction=ia.chooseAction((Partie)partie.clone());
+        			partie.unselectBateau();
+        			index+=1;
+        	
+        		  }while (partie.getMap().getCasesDisponibles(boat.getPosition(), 1).isEmpty() || boat.getMoveAvailable() == 0);
+        	  }
           } catch (Exception ex) {
 
 				Logger.getLogger(Partie.class.getName()).log(Level.SEVERE,null,ex);

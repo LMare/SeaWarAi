@@ -28,7 +28,7 @@ public class Attack extends Move{
 		// TODO Auto-generated method stub
 		 seaWarController.selection(this.getTarget().getX(), this.getTarget().getY());
          selectedTile.setCoords(this.getTarget().getY(), this.getTarget().getX());
-         partie.unselectBateau();
+        // partie.unselectBateau();
 		
 	}
 

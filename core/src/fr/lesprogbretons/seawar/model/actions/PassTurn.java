@@ -12,7 +12,7 @@ public class PassTurn extends Move {
 	
 	public PassTurn(Boat boat) {
 		super(boat,boat.getPosition());
-		this.boat=boat;
+		
 		
 	}
 	
@@ -27,7 +27,7 @@ public class PassTurn extends Move {
 		seaWarController.selection(this.getBoat().getPosition().getX(), this.getBoat().getPosition().getY());
         selectedTile.setCoords(this.getBoat().getPosition().getY(),this.getBoat().getPosition().getX());
         
-        partie.unselectBateau();
+       // partie.unselectBateau();
         System.out.println("Pass turn action");
 	}
 

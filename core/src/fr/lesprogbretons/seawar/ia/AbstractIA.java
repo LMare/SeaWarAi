@@ -1,9 +1,12 @@
 package fr.lesprogbretons.seawar.ia;
 
 
+import java.util.List;
+
 import fr.lesprogbretons.seawar.model.Partie;
 import fr.lesprogbretons.seawar.model.Player;
 import fr.lesprogbretons.seawar.model.actions.Action;
+import fr.lesprogbretons.seawar.model.boat.Boat;
 
 
 public abstract class AbstractIA extends Player{
@@ -22,6 +25,10 @@ public abstract class AbstractIA extends Player{
         super(number,name);
     }
 
+    public AbstractIA(int number, String name, List<Boat> boats) {
+    	super(number, name, boats);
+    	
+    }
     
     public final Action getMemorizedAction() {
     	return memorisedAction;

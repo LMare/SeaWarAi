@@ -465,7 +465,7 @@ public class Partie implements Serializable {
     			}
     		}
     		
-    		// game.revalidate();
+    		
     		
     		try {
     			
@@ -510,23 +510,28 @@ public class Partie implements Serializable {
 	public List<Action> getPossibleActions() {
     		List<Action> actions =new ArrayList<Action>();
     		Boat boat = this.getBateauSelectionne();
-            // potential of the seletected boat   
-    		ArrayList<Case> cases = this.getMap().getCasesDisponibles(boat.getPosition(), 1);
+            // potential of the seletected boat
+    		if(boat.getMoveAvailable() != 0 && !this.getMap().getCasesDisponibles(boat.getPosition(), 1).isEmpty() ) {
+    		List<Case> cases = this.getMap().getCasesDisponibles(boat.getPosition(), 1);
     		if (!cases.isEmpty()) {
             for (Case target:cases) {
                         actions.add(new MoveBoat(boat, target));
             	}                       
+            }else{
+            	
+            	 this.unselectBateau();
             }
+    		}
             // attack possibilities
-//            ArrayList<Case> boatInRange = this.getMap().getBoatInRange(boat, this.getOtherPlayer());
-//             if (!boatInRange.isEmpty() && boat.canShoot()) {
-//            	 for (Case target: boatInRange) {
-//            		 actions.add(new Attack(boat,target));
-//            	 }
-//             }
-//
-//             // pass the turn without doing nothing
-//             actions.add(new PassTurn(boat));
+            ArrayList<Case> boatInRange = this.getMap().getBoatInRange(boat, this.getOtherPlayer());
+             if (!boatInRange.isEmpty() && boat.canShoot()) {
+            	 for (Case target: boatInRange) {
+            		 actions.add(new Attack(boat,target));
+            	 }
+             }
+
+             // pass the turn without doing nothing
+             actions.add(new PassTurn(boat));
             
                
 			return actions;

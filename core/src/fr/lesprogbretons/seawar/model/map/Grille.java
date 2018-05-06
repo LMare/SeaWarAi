@@ -18,14 +18,15 @@ import java.util.ArrayList;
  */
 public class Grille implements Serializable {
 
-    //Joueurs
-    private Player joueur1 = new Player(1);
-    private Player joueur2 = new IAAleatoire(2);
-
+   
     //Bateaux
     ArrayList<Boat> bateaux1;
     ArrayList<Boat> bateaux2;
+    //Joueurs
+    private Player joueur1 = new Player(1);
+    private Player joueur2 = new IAAleatoire(2,"IAAleatoire",bateaux2);
 
+    
     //Cases de la Grille
     Case tableau[][];
     private int hauteur;
@@ -42,6 +43,9 @@ public class Grille implements Serializable {
         this.largeur = largeur;
         bateaux1 = new ArrayList<>();
         bateaux2 = new ArrayList<>();
+        //
+        //
+        joueur2.setBoats(bateaux2);
         tableau = new Case[hauteur][largeur];
 
         for (int i = 0; i < hauteur; i++) {
@@ -114,13 +118,19 @@ public class Grille implements Serializable {
     public void ajouterBateauJoueur1(Boat b) {
         ArrayList<Boat> tab = getBateaux1();
         tab.add(b);
+        joueur1.addBoat(b);
         setBateaux1(tab);
+        joueur1.setBoats(tab);
+        
     }
 
     public void ajouterBateauJoueur2(Boat b) {
         ArrayList<Boat> tab = getBateaux2();
         tab.add(b);
+        joueur2.addBoat(b);
         setBateaux2(tab);
+        
+        
     }
 
     /*******************************************************/

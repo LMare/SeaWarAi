@@ -1,8 +1,6 @@
 package fr.lesprogbretons.seawar.model.actions;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+
 
 import fr.lesprogbretons.seawar.model.Partie;
 import fr.lesprogbretons.seawar.model.boat.Boat;
@@ -35,7 +33,7 @@ public class MoveBoat extends Move {
 		//On se déplace
         seaWarController.selection(this.getTarget().getX(), this.getTarget().getY());
         selectedTile.setCoords(this.getTarget().getY(), this.getTarget().getX());
-        partie.unselectBateau();
+        //partie.unselectBateau();
         logger.debug("IAAleatoire déplacement : " + this.getTarget().getX() + ";" +this.getTarget().getY());
 	}
 
