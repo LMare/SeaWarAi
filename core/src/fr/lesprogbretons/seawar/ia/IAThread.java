@@ -56,9 +56,7 @@ public class IAThread extends Thread{
               int cantPlay=0;
         	  
         	  for (Boat boat : boats) {
-              	//
               	if (boat.getMoveAvailable() == 0 || partie.getMap().getCasesDisponibles(boat.getPosition(), 1).isEmpty()) cantPlay++;
-                  //logger.debug("Nb : " + cantPlay);
               }
         	  
         	  if (cantPlay == boats.size()) {
@@ -73,14 +71,19 @@ public class IAThread extends Thread{
         		  
         		  	
         			partie.setBateauSelectionne(boat);
-        			choosedAction=ia.chooseAction((Partie)partie.clone());
+        			this.choosedAction=ia.chooseAction((Partie)partie.clone());
         			partie.unselectBateau();
         			index+=1;
         	
         		  }while (partie.getMap().getCasesDisponibles(boat.getPosition(), 1).isEmpty() || boat.getMoveAvailable() == 0);
         	  }
+        	  
+        	  else {
+        		  
+        	  }
+        	  
           } catch (Exception ex) {
-
+        	  	System.out.println(ex.getCause());
 				Logger.getLogger(Partie.class.getName()).log(Level.SEVERE,null,ex);
 			  }
 

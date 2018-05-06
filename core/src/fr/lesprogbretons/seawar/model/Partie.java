@@ -9,6 +9,7 @@ import fr.lesprogbretons.seawar.model.actions.PassTurn;
 import fr.lesprogbretons.seawar.model.actions.Attack;
 import fr.lesprogbretons.seawar.model.boat.Boat;
 import fr.lesprogbretons.seawar.model.cases.Case;
+import fr.lesprogbretons.seawar.model.map.DefaultMap;
 import fr.lesprogbretons.seawar.model.map.Grille;
 import fr.lesprogbretons.seawar.model.map.RandomMap;
 
@@ -68,7 +69,7 @@ public class Partie implements Serializable {
     private List<Action> actions;
     //Constructeurs
     public Partie() {
-        map = new RandomMap(11, 13);
+        map = new RandomMap(11,13);
         joueur1 = map.getJoueur1();
         joueur2 = map.getJoueur2();
         currentPlayer = joueur1;
@@ -84,7 +85,14 @@ public class Partie implements Serializable {
     
     
     public Object clone() {
-    	return new Partie();
+    	
+    	Partie clone=new Partie();
+    	clone.actions=this.actions;
+    	clone.map=this.map;
+    	clone.joueur1=this.joueur1;
+    	clone.joueur2=this.joueur2;
+    	
+    	return clone;
     }
     
     
@@ -511,8 +519,16 @@ public class Partie implements Serializable {
     		List<Action> actions =new ArrayList<Action>();
     		Boat boat = this.getBateauSelectionne();
             // potential of the seletected boat
+    		List<Case> cases=null;
+    		
     		if(boat.getMoveAvailable() != 0 && !this.getMap().getCasesDisponibles(boat.getPosition(), 1).isEmpty() ) {
-    		List<Case> cases = this.getMap().getCasesDisponibles(boat.getPosition(), 1);
+    			cases = this.getMap().getCasesDisponibles(boat.getPosition(), 1);
+    		
+    		}else {
+    			
+    			System.err.println("no case are available");
+    		}
+            
     		if (!cases.isEmpty()) {
             for (Case target:cases) {
                         actions.add(new MoveBoat(boat, target));
@@ -521,8 +537,7 @@ public class Partie implements Serializable {
             	
             	 this.unselectBateau();
             }
-    		}
-            // attack possibilities
+    		// attack possibilities
             ArrayList<Case> boatInRange = this.getMap().getBoatInRange(boat, this.getOtherPlayer());
              if (!boatInRange.isEmpty() && boat.canShoot()) {
             	 for (Case target: boatInRange) {
