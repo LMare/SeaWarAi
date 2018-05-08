@@ -29,8 +29,8 @@ public class Grille implements Serializable {
     
     //Cases de la Grille
     Case tableau[][];
-    private int hauteur;
-    private int largeur;
+    public int hauteur;
+    public int largeur;
 
     /**
      * Constructeur
@@ -135,7 +135,7 @@ public class Grille implements Serializable {
 
     /*******************************************************/
     //Fonctions permettant d'avoir les cases voisines
-    private Case getCaseNord(Case c) {
+    public Case getCaseNord(Case c) {
         if (c == null) {
             return null;
         }
@@ -151,7 +151,7 @@ public class Grille implements Serializable {
         return null;
     }
 
-    private Case getCaseSud(Case c) {
+    public Case getCaseSud(Case c) {
         if (c == null) {
             return null;
         }
@@ -167,7 +167,7 @@ public class Grille implements Serializable {
         return null;
     }
 
-    private Case getCaseNordEst(Case c) {
+    public Case getCaseNordEst(Case c) {
         if (c == null) {
             return null;
         }
@@ -190,7 +190,7 @@ public class Grille implements Serializable {
         return null;
     }
 
-    private Case getCaseSudEst(Case c) {
+    public Case getCaseSudEst(Case c) {
         if (c == null) {
             return null;
         }
@@ -213,7 +213,7 @@ public class Grille implements Serializable {
         return null;
     }
 
-    private Case getCaseNordOuest(Case c) {
+    public Case getCaseNordOuest(Case c) {
         if (c == null) {
             return null;
         }
@@ -236,7 +236,7 @@ public class Grille implements Serializable {
         return null;
     }
 
-    private Case getCaseSudOuest(Case c) {
+    public Case getCaseSudOuest(Case c) {
         if (c == null) {
             return null;
         }
