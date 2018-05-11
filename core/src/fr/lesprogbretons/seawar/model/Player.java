@@ -51,10 +51,16 @@ public class Player implements Serializable{
 	}
 	
 
+    public Object clone(List<Boat> boats) {
+    	Player clone = new Player(this.number, this.name, boats);
+        clone.setPharesPossedes(this.getPharesPossedes());
+        return clone;
+    }
+
     public Object clone() {
-    	
-    	return new Player(this.number);
-    	
+
+        return new Player(this.number);
+
     }
     
     
