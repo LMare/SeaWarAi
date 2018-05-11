@@ -167,10 +167,6 @@ public abstract class Boat implements Serializable {
         moveAvailable = n;
     }
 
-    //public void setReloadMainCanon(int reloadMainCanon) { this.reloadMainCanon = reloadMainCanon; }
-
-    //public void setReloadSecCanon(int reloadSecCanon) { this.reloadSecCanon = reloadSecCanon; }
-
     public void setHp(int hp) { this.hp = hp; }
 
     public void setMainCD(int mainCD) { this.mainCD = mainCD; }

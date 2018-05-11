@@ -22,7 +22,7 @@ public class CaseEau extends Case implements Serializable{
         CaseEau clone = new CaseEau(this.getX(), this.getY());
         clone.setPhare(this.isPhare());
         clone.setPossedePhare(this.getPossedePhare());
-        //bateauDetruit ne sert pas pour le modele
+        //bateauDetruit ne semble pas servir pour le modele
         return clone;
     }
 
