@@ -13,6 +13,10 @@ public class CaseTerre extends Case implements Serializable{
         phare = false;
     }
 
+    public Object clone() {
+        return new CaseTerre(this.getX(), this.getY());
+    }
+
     @Override
     public String infoCase() {
         return "    Land";

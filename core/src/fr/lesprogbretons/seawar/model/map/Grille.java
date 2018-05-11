@@ -55,9 +55,14 @@ public class Grille implements Serializable {
         }
     }
 
+    public Grille() {
+    }
+
 
     public Object clone() {
-        Grille clone=new Grille(hauteur, largeur);
+        Grille clone=new Grille();
+        clone.setHauteur(this.getHauteur());
+        clone.setLargeur(this.getLargeur());
         ArrayList<Boat> nav1 = new ArrayList<Boat>();
         for (Boat nav:bateaux1) {
             nav1.add((Boat) nav.clone());
@@ -70,13 +75,11 @@ public class Grille implements Serializable {
         clone.setBateaux2(nav2);
         clone.setJoueur1((Player) this.joueur1.clone(nav1));
         clone.setJoueur2((Player) this.joueur2.clone(nav2));
-        //TODO: reprendre la creation du tableau => il faut des instances de CaseTerre !
         for (int i = 0; i < hauteur; i++) {
             for (int j = 0; j < largeur; j++) {
-               clone.tableau[i][j].setPhare(this.tableau[i][j].isPhare());
+               clone.tableau[i][j] = (Case) this.tableau[i][j].clone();
             }
         }
-
         return null;
     }
 
