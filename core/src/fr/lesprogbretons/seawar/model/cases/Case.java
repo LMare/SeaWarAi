@@ -103,4 +103,6 @@ public abstract class Case implements Serializable{
             return "";
         }
     }
+
+    public abstract Object clone();
 }

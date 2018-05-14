@@ -60,6 +60,8 @@ public abstract class Boat implements Serializable {
         this.joueur = p;
     }
 
+
+    public abstract Object clone();
     /*----------------------------------------------------------------------------*/
     //Getters & Setters
     public int getMove() {
@@ -164,6 +166,12 @@ public abstract class Boat implements Serializable {
     public void setMoveAvailable(int n) {
         moveAvailable = n;
     }
+
+    public void setHp(int hp) { this.hp = hp; }
+
+    public void setMainCD(int mainCD) { this.mainCD = mainCD; }
+
+    public void setSecCD(int secCD) { this.secCD = secCD; }
 
     /*---------------------------------------------------------------------------------------------*/
     //infosCurrentPlayer

@@ -22,6 +22,22 @@ public class Amiral extends Boat implements Serializable {
         reloadSecCanon = 2;
     }
 
+    public Object clone() {
+        Amiral clone = new Amiral(this.getPosition(), null); // le joueur ne semble pas servir dans le modele
+        clone.setAlive(this.isAlive());
+        clone.setEstBloque(this.isEstBloque());
+        clone.setCanonSelectionne(this.getCanonSelectionne());
+        clone.setMoveAvailable(this.getMoveAvailable());
+        clone.setShootTaken(this.getShootTaken());
+        clone.setOrientation(this.getOrientation());
+        clone.setMainCD(this.getMainCD());
+        clone.setSecCD(this.getSecCD());
+        clone.setHp(this.getHp());
+
+        return clone;
+    }
+
+
     @Override
     public String toString() {
         return "Amiral";
