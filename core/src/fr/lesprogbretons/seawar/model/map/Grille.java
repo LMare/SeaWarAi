@@ -60,7 +60,7 @@ public class Grille implements Serializable {
 
 
     public Object clone() {
-        Grille clone=new Grille();
+        Grille clone=new Grille(this.hauteur,this.largeur);
         clone.setHauteur(this.getHauteur());
         clone.setLargeur(this.getLargeur());
         ArrayList<Boat> nav1 = new ArrayList<Boat>();
@@ -80,7 +80,7 @@ public class Grille implements Serializable {
                clone.tableau[i][j] = (Case) this.tableau[i][j].clone();
             }
         }
-        return null;
+        return clone;
     }
 
     /*---------------------------------------------------*/

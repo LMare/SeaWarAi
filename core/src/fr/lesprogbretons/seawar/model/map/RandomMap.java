@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 
 import fr.lesprogbretons.seawar.model.Orientation;
 import fr.lesprogbretons.seawar.model.boat.Amiral;
+import fr.lesprogbretons.seawar.model.boat.Boat;
 import fr.lesprogbretons.seawar.model.boat.Fregate;
 import fr.lesprogbretons.seawar.model.cases.CaseTerre;
 
@@ -101,9 +102,21 @@ public class RandomMap extends Grille{
 			int yTerre   = (int) Math.ceil(freeCases.get(iTerre)%hauteur);
 			if (xTerre<0) {xTerre=0;}
 			if (yTerre<0) {yTerre=0;}
-			tableau[yTerre][xTerre]=new CaseTerre(yTerre,xTerre);
-			freeCases.remove(freeCases.get(iTerre));
-			
+			boolean bateauSurCaseTerre = false;
+			for(Boat b:bateaux2){
+				if(b.getPosition().getX()==yTerre && b.getPosition().getY()==xTerre){
+					bateauSurCaseTerre=true;
+				}
+			}
+			for(Boat b:bateaux1){
+				if(b.getPosition().getX()==yTerre && b.getPosition().getY()==xTerre){
+					bateauSurCaseTerre=true;
+				}
+			}
+			if(!bateauSurCaseTerre) {
+				tableau[yTerre][xTerre] = new CaseTerre(yTerre, xTerre);
+				freeCases.remove(freeCases.get(iTerre));
+			}
 		}
 		
 		
