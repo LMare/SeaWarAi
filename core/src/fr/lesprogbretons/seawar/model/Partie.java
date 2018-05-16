@@ -1,25 +1,13 @@
 package fr.lesprogbretons.seawar.model;
 
-import fr.lesprogbretons.seawar.ia.AbstractIA;
-import fr.lesprogbretons.seawar.ia.IAAleatoire;
-import fr.lesprogbretons.seawar.ia.IAThread;
 import fr.lesprogbretons.seawar.model.actions.Action;
-import fr.lesprogbretons.seawar.model.actions.Attack;
-import fr.lesprogbretons.seawar.model.actions.MoveBoat;
-import fr.lesprogbretons.seawar.model.actions.PassTurn;
 import fr.lesprogbretons.seawar.model.boat.Boat;
-import fr.lesprogbretons.seawar.model.cases.Case;
 import fr.lesprogbretons.seawar.model.map.Grille;
 import fr.lesprogbretons.seawar.model.map.RandomMap;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class Partie implements Serializable {
@@ -55,10 +43,6 @@ public class Partie implements Serializable {
     //Liste de bateaux qui a deja joué pendant le tour
     private ArrayList<Boat> bateauxDejaDeplaces = new ArrayList<>();
 
-
-    // 
-
-
     // actions
     private List<Action> actions;
 
@@ -85,6 +69,29 @@ public class Partie implements Serializable {
         clone.map = (Grille) this.map.clone();
         clone.joueur1 = map.getJoueur1();
         clone.joueur2 = map.getJoueur2();
+        clone.currentPlayer = this.currentPlayer;
+        if (this.bateauSelectionne.getJoueur() == joueur1) {
+            clone.bateauSelectionne = clone.map.getBateaux1()
+                    .get(this.map.getBateaux1().indexOf(this.bateauSelectionne));
+        } else {
+            clone.bateauSelectionne = clone.map.getBateaux2()
+                    .get(this.map.getBateaux2().indexOf(this.bateauSelectionne));
+        }
+        clone.isAnyBateauSelectionne = this.isAnyBateauSelectionne;
+        clone.fin = fin;
+        clone.turnCounter = turnCounter;
+
+        for (Boat b : bateauxDejaDeplaces) {
+            assert b != null;
+            assert joueur1 != null;
+            if (b.getJoueur() == joueur1) {
+                clone.bateauxDejaDeplaces.add(clone.map.getBateaux1()
+                        .get(this.map.getBateaux1().indexOf(b)));
+            } else {
+                clone.bateauxDejaDeplaces.add(clone.map.getBateaux2()
+                        .get(this.map.getBateaux2().indexOf(b)));
+            }
+        }
 
         return clone;
     }
@@ -386,163 +393,4 @@ public class Partie implements Serializable {
             return false;
         }
     }
-
-
-    @SuppressWarnings("deprecation")
-    public synchronized void jouerIA() {
-
-        if (getCurrentPlayer() instanceof AbstractIA) {
-            int identifier = getCurrentPlayer().getNumber();
-
-
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            AbstractIA ia = (AbstractIA) getCurrentPlayer();
-            IAThread calcul = new IAThread(ia, this, executor);
-            executor.execute(calcul);
-            try {
-                if (!executor.awaitTermination(AbstractIA.TIME_TO_THINK, TimeUnit.MILLISECONDS)) {
-
-                    executor.shutdown();
-                }
-
-
-            } catch (InterruptedException ex) {
-
-                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, null, ex);
-
-            }
-            try {
-
-                calcul.join();
-            } catch (InterruptedException e) {
-                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, null, e);
-
-            }
-            Action action;
-
-
-            if (calcul.getActionChoice() == null && ia.getMemorizedAction() == null) {
-
-                System.out.println(Thread.currentThread().getName() + ":"
-                        + " Aucune action choisie, aucune action memorisee");
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-                System.out.println("!!!!!!!!!!!!!!!!!!!			HASARD			!!!!!!!!!!!!");
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-
-                action = (new IAAleatoire(identifier).chooseAction(this));
-            } else if (calcul.getActionChoice() == null && ia.getMemorizedAction() != null) {
-
-                System.out.println(Thread.currentThread().getName() + ":"
-                        + "Aucune action choisie mais action mémorisée");
-                action = calcul.getActionChoice();
-
-
-            } else {
-
-                action = calcul.getActionChoice();
-
-            }
-
-            while (!validAction(ia, action)) {
-                System.out.println(Thread.currentThread().getName() + ":" + "Action non valid");
-                System.exit(0);
-                action = (new IAAleatoire(identifier).chooseAction(this));
-            }
-
-            System.out.println("Action jouee = " + action);
-            action.apply(this);
-
-            // Kill remaining IAThread threads
-            for (Thread t : Thread.getAllStackTraces().keySet()) {
-                for (StackTraceElement ste : t.getStackTrace()) {
-                    if (ste.getClassName().equals("fr.lesprogbretons.seawar.ia.IAThread")) {
-                        t.stop();
-                    }
-                    ;
-                }
-            }
-
-
-            try {
-
-                Thread.sleep(200);
-            } catch (InterruptedException ex) {
-
-
-            }
-
-        }
-
-
-    }
-
-
-    private boolean validAction(AbstractIA ia, Action action) {
-        if (action instanceof PassTurn) {
-            return true;
-
-        } else if (action instanceof MoveBoat) {
-
-            return true;
-
-        } else if (action instanceof Attack) {
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public List<Action> getPossibleActions() {
-        List<Action> actions = new ArrayList<>();
-        Boat boat = this.getBateauSelectionne();
-        // potential of the seletected boat
-        List<Case> cases = null;
-
-        if (boat.getMoveAvailable() != 0 && !this.getMap().getCasesDisponibles(boat.getPosition(), 1).isEmpty()) {
-            cases = this.getMap().getCasesDisponibles(boat.getPosition(), 1);
-
-        } else {
-
-            System.err.println("no case are available");
-        }
-
-        if (!cases.isEmpty()) {
-            for (Case target : cases) {
-                actions.add(new MoveBoat(boat, target));
-            }
-        } else {
-            this.unselectBateau();
-        }
-        // attack possibilities
-        ArrayList<Case> boatInRange = this.getMap().getBoatInRange(boat, this.getOtherPlayer());
-        if (!boatInRange.isEmpty() && boat.canShoot()) {
-            for (Case target : boatInRange) {
-                actions.add(new Attack(boat, target));
-            }
-        }
-
-        // pass the turn without doing nothing
-        actions.add(new PassTurn(boat));
-
-
-        return actions;
-    }
-
-
-    public void launchTurn() {
-        //	System.out.println("Is there any Information");
-        while (getCurrentPlayer() instanceof AbstractIA) {
-            System.out.println("Some thing happen or nothing");
-            jouerIA();
-            endTurn();
-            //setCurrentPlayer(getJoueur1());
-        }
-
-    }
-
-
 }
