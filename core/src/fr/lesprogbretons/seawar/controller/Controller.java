@@ -23,7 +23,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import static fr.lesprogbretons.seawar.SeaWar.logger;
-import static fr.lesprogbretons.seawar.SeaWar.seaWarController;
 
 /**
  * Classe Controller
@@ -273,7 +272,6 @@ public class Controller {
         }
     }
 
-
     public List<Action> getPossibleActions() {
         ArrayList<Action> actions = new ArrayList<>();
         Boat boat = this.partie.getBateauSelectionne();
@@ -292,9 +290,8 @@ public class Controller {
             for (Case target : cases) {
                 actions.add(new MoveBoat(boat, target));
             }
-        } else {
-            this.partie.unselectBateau();
         }
+        
         // attack possibilities
         ArrayList<Case> boatInRange = this.partie.getMap().getBoatInRange(boat, this.partie.getOtherPlayer());
         if (!boatInRange.isEmpty() && boat.canShoot()) {

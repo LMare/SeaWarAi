@@ -86,8 +86,6 @@ public class Partie implements Serializable {
         clone.turnCounter = turnCounter;
 
         for (Boat b : bateauxDejaDeplaces) {
-            assert b != null;
-            assert joueur1 != null;
             if (b.getJoueur() == joueur1) {
                 clone.bateauxDejaDeplaces.add(clone.map.getBateaux1()
                         .get(this.map.getBateaux1().indexOf(b)));

@@ -16,7 +16,6 @@ import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import fr.lesprogbretons.seawar.SeaWar;
 import fr.lesprogbretons.seawar.assets.Assets;
 import fr.lesprogbretons.seawar.model.Orientation;
-import fr.lesprogbretons.seawar.model.Partie;
 import fr.lesprogbretons.seawar.model.boat.Amiral;
 import fr.lesprogbretons.seawar.model.boat.Boat;
 import fr.lesprogbretons.seawar.model.boat.Fregate;
@@ -94,6 +93,7 @@ public class SeaWarMapScreen extends ScreenAdapter {
         //Redimentionner l'écran pour faire rentrer la map
         int width = 800;
         int height = 800;
+//        Gdx.graphics.setWindowedMode(1280, 720);
         Gdx.graphics.setWindowedMode(width, height);
 
         float w = Gdx.graphics.getWidth();
@@ -152,8 +152,6 @@ public class SeaWarMapScreen extends ScreenAdapter {
         multiplexer.addProcessor(myUi);
         multiplexer.addProcessor(cameraController);
         Gdx.input.setInputProcessor(multiplexer);
-
-
 
         manager.start();
     }
