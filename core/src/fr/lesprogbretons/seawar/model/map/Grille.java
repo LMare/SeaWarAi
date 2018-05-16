@@ -63,6 +63,7 @@ public class Grille implements Serializable {
         Grille clone=new Grille(this.hauteur,this.largeur);
         clone.setHauteur(this.getHauteur());
         clone.setLargeur(this.getLargeur());
+        clone.setTableau(new Case[hauteur][largeur]);
         ArrayList<Boat> nav1 = new ArrayList<Boat>();
         for (Boat nav:bateaux1) {
             nav1.add((Boat) nav.clone());
@@ -85,6 +86,11 @@ public class Grille implements Serializable {
 
     /*---------------------------------------------------*/
     //Getters & Setters
+   
+   public void setTableau(Case[][] tableau) {
+        this.tableau = tableau;
+    }
+   
     public Player getJoueur1() {
         return joueur1;
     }
