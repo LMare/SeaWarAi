@@ -85,13 +85,35 @@ public class Partie implements Serializable {
     
     
     public Object clone() {
-    	
     	Partie clone=new Partie();
     	clone.actions=this.actions;//cloner action ?
     	clone.map= (Grille) this.map.clone();
     	clone.joueur1=map.getJoueur1();
     	clone.joueur2=map.getJoueur2();
-    	
+    	if(this.currentPlayer.getNumber()==1){
+    	    clone.currentPlayer = map.getJoueur1();
+        } else {
+            clone.currentPlayer = map.getJoueur2();
+        }
+        clone.fin=this.fin;
+    	ArrayList<Boat> batDDeplaceClone = new ArrayList<>();
+    	for(Boat b : bateauxDejaDeplaces){
+    	    if(b.getJoueur().getNumber()==1){
+    	        for(Boat b1:clone.map.getBateaux1()){
+    	            if(b1.getHp()==b.getHp() && b1.getPosition().getX()==b.getPosition().getX() && b1.getPosition().getY()==b.getPosition().getY()){
+    	                batDDeplaceClone.add(b1);
+                    }
+                }
+            }
+            if(b.getJoueur().getNumber()==2){
+                for(Boat b2:clone.map.getBateaux2()){
+                    if(b2.getHp()==b.getHp() && b2.getPosition().getX()==b.getPosition().getX() && b2.getPosition().getY()==b.getPosition().getY()){
+                        batDDeplaceClone.add(b2);
+                    }
+                }
+            }
+        }
+        clone.bateauxDejaDeplaces=batDDeplaceClone;
     	return clone;
     }
     
