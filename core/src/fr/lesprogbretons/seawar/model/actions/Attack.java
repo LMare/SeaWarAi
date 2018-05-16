@@ -4,6 +4,8 @@ import fr.lesprogbretons.seawar.controller.Controller;
 import fr.lesprogbretons.seawar.model.boat.Boat;
 import fr.lesprogbretons.seawar.model.cases.Case;
 
+import static fr.lesprogbretons.seawar.SeaWar.logger;
+
 public class Attack extends Move {
 
 
@@ -18,8 +20,10 @@ public class Attack extends Move {
 
     @Override
     public void apply(Controller controller) {
-        controller.selection(this.getTarget().getX(), this.getTarget().getY());
+        super.apply(controller);
         // partie.unselectBateau();
+        logger.debug("Action attaque : " + this.getTarget().getX() + ";" + this.getTarget().getY());
+
 
     }
 

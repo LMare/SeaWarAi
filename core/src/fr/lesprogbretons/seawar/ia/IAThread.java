@@ -7,10 +7,8 @@ import fr.lesprogbretons.seawar.model.boat.Boat;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import static fr.lesprogbretons.seawar.SeaWar.seaWarController;
+import static fr.lesprogbretons.seawar.SeaWar.logger;
 
 public class IAThread extends Thread {
 
@@ -28,7 +26,7 @@ public class IAThread extends Thread {
         setName("Calcul");
         this.ia = ia;
         this.executorService = executorService;
-        this.controller = controller;
+        this.controller = (Controller) controller.clone();
         this.choosedAction = null;
 
     }
@@ -70,7 +68,7 @@ public class IAThread extends Thread {
 
                     do {
                         myPartie.setBateauSelectionne(boat);
-                        this.choosedAction = ia.chooseAction((Controller) controller.clone());
+                        this.choosedAction = ia.chooseAction(controller);
                         myPartie.unselectBateau();
                         index += 1;
 
@@ -82,7 +80,8 @@ public class IAThread extends Thread {
 
             } catch (Exception ex) {
                 ex.printStackTrace();
-                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, "Erreur choix action", ex);
+                logger.error("Erreur choix action", ex);
+//                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, "Erreur choix action", ex);
             } finally {
 
                 executorService.shutdown();

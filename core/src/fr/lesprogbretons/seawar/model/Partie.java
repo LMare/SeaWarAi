@@ -9,6 +9,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import static fr.lesprogbretons.seawar.SeaWar.logger;
+
 
 public class Partie implements Serializable {
 
@@ -24,7 +26,7 @@ public class Partie implements Serializable {
     private Player currentPlayer;
 
     //Bateau sélectionné par le joueur
-    private Boat bateauSelectionne;
+    public Boat bateauSelectionne;
     private boolean isAnyBateauSelectionne = false;
 
     //Pour savoir si la partie est finie
@@ -67,15 +69,17 @@ public class Partie implements Serializable {
         Partie clone = new Partie();
         clone.actions = this.actions;//cloner action ?
         clone.map = (Grille) this.map.clone();
-        clone.joueur1 = map.getJoueur1();
-        clone.joueur2 = map.getJoueur2();
+        clone.joueur1 = clone.map.getJoueur1();
+        clone.joueur2 = clone.map.getJoueur2();
         clone.currentPlayer = this.currentPlayer;
-        if (this.bateauSelectionne.getJoueur() == joueur1) {
-            clone.bateauSelectionne = clone.map.getBateaux1()
-                    .get(this.map.getBateaux1().indexOf(this.bateauSelectionne));
-        } else {
-            clone.bateauSelectionne = clone.map.getBateaux2()
-                    .get(this.map.getBateaux2().indexOf(this.bateauSelectionne));
+        if (this.bateauSelectionne != null) {
+            if (this.bateauSelectionne.getJoueur() == joueur1) {
+                clone.bateauSelectionne = clone.map.getBateaux1()
+                        .get(this.map.getBateaux1().indexOf(this.bateauSelectionne));
+            } else {
+                clone.bateauSelectionne = clone.map.getBateaux2()
+                        .get(this.map.getBateaux2().indexOf(this.bateauSelectionne));
+            }
         }
         clone.isAnyBateauSelectionne = this.isAnyBateauSelectionne;
         clone.fin = fin;

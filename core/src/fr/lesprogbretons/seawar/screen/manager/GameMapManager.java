@@ -34,7 +34,7 @@ public class GameMapManager implements MapManager {
         //Load music
         music = (Music) assets.get(Assets.gameMusic);
         music.setLooping(true);
-        music.play();
+//        music.play();
         seaWarController.launchTurn();
     }
 
@@ -57,7 +57,7 @@ public class GameMapManager implements MapManager {
     public void start() {
         //Montrer le message de début de tour
         myUi.startTurnMessage();
-        music.play();
+//        music.play();
     }
 
     @Override

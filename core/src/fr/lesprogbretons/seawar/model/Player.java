@@ -50,6 +50,10 @@ public class Player implements Serializable {
 
     public Object clone(List<Boat> boats) {
         Player clone = new Player(this.number, this.name, boats);
+        //Set player to boats
+        for (Boat b : clone.getBoats()) {
+            b.setJoueur(clone);
+        }
         clone.setPharesPossedes(this.getPharesPossedes());
         return clone;
     }

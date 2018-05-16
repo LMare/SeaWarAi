@@ -25,11 +25,10 @@ public class MoveBoat extends Move {
 
     @Override
     public void apply(Controller controller) {
-
+        super.apply(controller);
         //On se déplace
-        controller.selection(this.getTarget().getX(), this.getTarget().getY());
         //partie.unselectBateau();
-        logger.debug("IAAleatoire déplacement : " + this.getTarget().getX() + ";" + this.getTarget().getY());
+        logger.debug("Action déplacement déplacement : " + this.getTarget().getX() + ";" + this.getTarget().getY());
     }
 
 

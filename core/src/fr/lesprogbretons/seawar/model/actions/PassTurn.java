@@ -4,6 +4,8 @@ import fr.lesprogbretons.seawar.controller.Controller;
 import fr.lesprogbretons.seawar.model.Partie;
 import fr.lesprogbretons.seawar.model.boat.Boat;
 
+import static fr.lesprogbretons.seawar.SeaWar.logger;
+
 public class PassTurn extends Move {
     private Partie partie;
     private Boat boat;
@@ -21,9 +23,10 @@ public class PassTurn extends Move {
 
     @Override
     public void apply(Controller controller) {
-        controller.endTurn();
+        //Will be done
+//        controller.getPartie().endTurn();
         // partie.unselectBateau();
-        System.out.println("Pass turn action");
+        logger.debug("Pass turn action");
     }
 
     @Override

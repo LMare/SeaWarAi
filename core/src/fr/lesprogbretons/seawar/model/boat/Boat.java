@@ -36,7 +36,7 @@ public abstract class Boat implements Serializable {
     private int secCD = 0;
 
     //Joueur possédant ce bateau
-    Player joueur;
+    private Player joueur;
 
     public boolean isEstBloque() {
         return estBloque;
@@ -142,6 +142,10 @@ public abstract class Boat implements Serializable {
 
     public Orientation getOrientation() {
         return orientation;
+    }
+
+    public void setJoueur(Player joueur) {
+        this.joueur = joueur;
     }
 
     public void setOrientation(Orientation orientation) {

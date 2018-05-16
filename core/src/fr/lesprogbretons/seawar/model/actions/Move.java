@@ -1,5 +1,6 @@
 package fr.lesprogbretons.seawar.model.actions;
 
+import fr.lesprogbretons.seawar.controller.Controller;
 import fr.lesprogbretons.seawar.model.boat.Boat;
 import fr.lesprogbretons.seawar.model.cases.Case;
 
@@ -13,6 +14,11 @@ public abstract class Move extends Action {
         this.target = target;
     }
 
+    @Override
+    public void apply(Controller state) {
+        state.selection(this.getBoat().getPosition().getX(), this.getBoat().getPosition().getY());
+        state.selection(this.getTarget().getX(), this.getTarget().getY());
+    }
 
     public Boat getBoat() {
 

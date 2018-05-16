@@ -21,8 +21,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import static fr.lesprogbretons.seawar.SeaWar.logger;
+import static fr.lesprogbretons.seawar.SeaWar.seaWarController;
 
 /**
  * Classe Controller
@@ -68,10 +69,10 @@ public class Controller {
         if (partie.isAnyBateauSelectionne()) {
 
             ArrayList<Case> casesPorteeTir;
-            casesPorteeTir = partie.getMap().getCasesPortees(partie.getBateauSelectionne());
+            casesPorteeTir = partie.getMap().getCasesPortees(partie.bateauSelectionne);
 
 
-            if (partie.getMap().casePossedeBateau(c, partie.getCurrentPlayer()) && !(partie.getMap().bateauSurCase(c).equals(partie.getBateauSelectionne()))) {
+            if (partie.getMap().casePossedeBateau(c, partie.getCurrentPlayer()) && !(partie.getMap().bateauSurCase(c).equals(partie.bateauSelectionne))) {
                 partie.setBateauSelectionne(partie.getMap().bateauSurCase(c));
                 actionFaite = true;
             }
@@ -79,7 +80,7 @@ public class Controller {
             //Si la case sélectionnée est à portée de tir
             else if (casesPorteeTir.contains(c)) {
                 if (partie.getMap().casePossedeBateau(c, partie.getOtherPlayer())) {
-                    partie.getBateauSelectionne().shoot(partie.getMap().bateauSurCase(c));
+                    partie.bateauSelectionne.shoot(partie.getMap().bateauSurCase(c));
                     if (!partie.getMap().bateauSurCase(c).isAlive()) {
                         c.setBateauDetruit(true);
                         if (partie.getCurrentPlayer().getNumber() == 1) {
@@ -94,26 +95,25 @@ public class Controller {
             }
 
             if (!actionFaite) {
-                assert partie.getBateauSelectionne() != null;
-                ArrayList<Case> casesDispo = partie.getMap().getCasesDisponibles(partie.getBateauSelectionne().getPosition(), 1);
+                ArrayList<Case> casesDispo = partie.getMap().getCasesDisponibles(partie.bateauSelectionne.getPosition(), 1);
 
                 //Si la case sélectionnée est à portée de déplacement
-                if (partie.getBateauxDejaDeplaces().size() == 0 && casesDispo.contains(c) && partie.getBateauSelectionne().getMoveAvailable() > 0) {
-                    partie.getBateauSelectionne().moveBoat(c);
-                    partie.ajouterBateauxDejaDeplaces(partie.getBateauSelectionne());
+                if (partie.getBateauxDejaDeplaces().size() == 0 && casesDispo.contains(c) && partie.bateauSelectionne.getMoveAvailable() > 0) {
+                    partie.bateauSelectionne.moveBoat(c);
+                    partie.ajouterBateauxDejaDeplaces(partie.bateauSelectionne);
                    /* if (c.isPhare()) {
                         partie.getMap().prendPhare(c, partie.getCurrentPlayer());
                     }*/
-                } else if (casesDispo.contains(c) && partie.getBateauSelectionne().getMoveAvailable() > 0 && partie.getBateauxDejaDeplaces().get(partie.getBateauxDejaDeplaces().size() - 1).equals(partie.getBateauSelectionne())) {
-                    partie.getBateauSelectionne().moveBoat(c);
-                    partie.ajouterBateauxDejaDeplaces(partie.getBateauSelectionne());
+                } else if (casesDispo.contains(c) && partie.bateauSelectionne.getMoveAvailable() > 0 && partie.getBateauxDejaDeplaces().get(partie.getBateauxDejaDeplaces().size() - 1).equals(partie.bateauSelectionne)) {
+                    partie.bateauSelectionne.moveBoat(c);
+                    partie.ajouterBateauxDejaDeplaces(partie.bateauSelectionne);
                    /* if (c.isPhare()) {
                         partie.getMap().prendPhare(c, partie.getCurrentPlayer());
                     }*/
-                } else if (casesDispo.contains(c) && partie.getBateauSelectionne().getMoveAvailable() > 0 && !(partie.getBateauxDejaDeplaces().contains(partie.getBateauSelectionne()))) {
+                } else if (casesDispo.contains(c) && partie.bateauSelectionne.getMoveAvailable() > 0 && !(partie.getBateauxDejaDeplaces().contains(partie.bateauSelectionne))) {
                     partie.getBateauxDejaDeplaces().get(partie.getBateauxDejaDeplaces().size() - 1).setMoveAvailable(0);
-                    partie.getBateauSelectionne().moveBoat(c);
-                    partie.ajouterBateauxDejaDeplaces(partie.getBateauSelectionne());
+                    partie.bateauSelectionne.moveBoat(c);
+                    partie.ajouterBateauxDejaDeplaces(partie.bateauSelectionne);
                    /* if (c.isPhare()) {
                         partie.getMap().prendPhare(c, partie.getCurrentPlayer());
                     }*/
@@ -157,7 +157,7 @@ public class Controller {
     }
 
     public void changerCanon() {
-        partie.getBateauSelectionne().setCanonSelectionne(3 - partie.getBateauSelectionne().getCanonSelectionne());
+        partie.bateauSelectionne.setCanonSelectionne(3 - partie.bateauSelectionne.getCanonSelectionne());
 
     }
 
@@ -176,6 +176,7 @@ public class Controller {
 
             ExecutorService executor = Executors.newSingleThreadExecutor();
             AbstractIA ia = (AbstractIA) partie.getCurrentPlayer();
+            //TODO Change here
             IAThread calcul = new IAThread(ia, this, executor);
             executor.execute(calcul);
             try {
@@ -186,15 +187,16 @@ public class Controller {
 
 
             } catch (InterruptedException ex) {
-
-                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, "Erreur arrêt IA", ex);
+                logger.error("Erreur arrêt IA", ex);
+//                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, "Erreur arrêt IA", ex);
 
             }
             try {
 
                 calcul.join();
             } catch (InterruptedException e) {
-                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, "Erreur IA", e);
+//                Logger.getLogger(Partie.class.getName()).log(Level.SEVERE, "Erreur IA", e);
+                logger.error("Erreur IA", e);
 
             }
             Action action;
@@ -202,17 +204,17 @@ public class Controller {
 
             if (calcul.getActionChoice() == null && ia.getMemorizedAction() == null) {
 
-                System.out.println(Thread.currentThread().getName() + ":"
+                logger.debug(Thread.currentThread().getName() + ":"
                         + " Aucune action choisie, aucune action memorisee");
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-                System.out.println("!!!!!!!!!!!!!!!!!!!			HASARD		   !!!!!!!!!!!!");
-                System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                logger.debug("!!!!!!!!!!!!!!!!!!!			HASARD		 !!!!!!!!!!!!");
+                logger.debug("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
 
                 action = (new IAAleatoire(identifier).chooseAction(this));
             } else if (calcul.getActionChoice() == null && ia.getMemorizedAction() != null) {
 
-                System.out.println(Thread.currentThread().getName() + ":"
+                logger.debug(Thread.currentThread().getName() + ":"
                         + "Aucune action choisie mais action mémorisée");
                 action = calcul.getActionChoice();
 
@@ -224,12 +226,12 @@ public class Controller {
             }
 
             while (!validAction(ia, action)) {
-                System.out.println(Thread.currentThread().getName() + ":" + "Action non valid");
+                logger.debug(Thread.currentThread().getName() + ":" + "Action non valide");
                 System.exit(0);
                 action = (new IAAleatoire(identifier).chooseAction(this));
             }
 
-            System.out.println("Action jouee = " + action);
+            logger.error("Action jouee = " + action);
             action.apply(this);
 
             // Kill remaining IAThread threads
@@ -240,7 +242,6 @@ public class Controller {
                     }
                 }
             }
-
 
             try {
 
@@ -275,7 +276,7 @@ public class Controller {
 
     public List<Action> getPossibleActions() {
         ArrayList<Action> actions = new ArrayList<>();
-        Boat boat = this.partie.getBateauSelectionne();
+        Boat boat = this.partie.bateauSelectionne;
         // potential of the seletected boat
         ArrayList<Case> cases = new ArrayList<>();
 
@@ -309,13 +310,14 @@ public class Controller {
         return actions;
     }
 
-        public void launchTurn() {
+    public void launchTurn() {
         Thread t = new Thread(() -> {
-            //System.out.println("Is there any Information");
+            logger.debug("Thread launched");
+            //logger.debug("Is there any Information");
             while (partie.getCurrentPlayer() instanceof AbstractIA) {
-                System.out.println("Some thing happen or nothing");
+                logger.debug("Some thing happen or nothing");
                 jouerIA();
-                partie.endTurn();
+                endTurn();
                 //setCurrentPlayer(getJoueur1());
             }
         });
