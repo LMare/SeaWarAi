@@ -69,10 +69,10 @@ public class Controller {
         if (partie.isAnyBateauSelectionne()) {
 
             ArrayList<Case> casesPorteeTir;
-            casesPorteeTir = partie.getMap().getCasesPortees(partie.bateauSelectionne);
+            casesPorteeTir = partie.getMap().getCasesPortees(partie.getBateauSelectionne());
 
 
-            if (partie.getMap().casePossedeBateau(c, partie.getCurrentPlayer()) && !(partie.getMap().bateauSurCase(c).equals(partie.bateauSelectionne))) {
+            if (partie.getMap().casePossedeBateau(c, partie.getCurrentPlayer()) && !(partie.getMap().bateauSurCase(c).equals(partie.getBateauSelectionne()))) {
                 partie.setBateauSelectionne(partie.getMap().bateauSurCase(c));
                 actionFaite = true;
             }
@@ -80,7 +80,7 @@ public class Controller {
             //Si la case sélectionnée est à portée de tir
             else if (casesPorteeTir.contains(c)) {
                 if (partie.getMap().casePossedeBateau(c, partie.getOtherPlayer())) {
-                    partie.bateauSelectionne.shoot(partie.getMap().bateauSurCase(c));
+                    partie.getBateauSelectionne().shoot(partie.getMap().bateauSurCase(c));
                     if (!partie.getMap().bateauSurCase(c).isAlive()) {
                         c.setBateauDetruit(true);
                         if (partie.getCurrentPlayer().getNumber() == 1) {
@@ -95,25 +95,25 @@ public class Controller {
             }
 
             if (!actionFaite) {
-                ArrayList<Case> casesDispo = partie.getMap().getCasesDisponibles(partie.bateauSelectionne.getPosition(), 1);
+                ArrayList<Case> casesDispo = partie.getMap().getCasesDisponibles(partie.getBateauSelectionne().getPosition(), 1);
 
                 //Si la case sélectionnée est à portée de déplacement
-                if (partie.getBateauxDejaDeplaces().size() == 0 && casesDispo.contains(c) && partie.bateauSelectionne.getMoveAvailable() > 0) {
-                    partie.bateauSelectionne.moveBoat(c);
-                    partie.ajouterBateauxDejaDeplaces(partie.bateauSelectionne);
+                if (partie.getBateauxDejaDeplaces().size() == 0 && casesDispo.contains(c) && partie.getBateauSelectionne().getMoveAvailable() > 0) {
+                    partie.getBateauSelectionne().moveBoat(c);
+                    partie.ajouterBateauxDejaDeplaces(partie.getBateauSelectionne());
                    /* if (c.isPhare()) {
                         partie.getMap().prendPhare(c, partie.getCurrentPlayer());
                     }*/
-                } else if (casesDispo.contains(c) && partie.bateauSelectionne.getMoveAvailable() > 0 && partie.getBateauxDejaDeplaces().get(partie.getBateauxDejaDeplaces().size() - 1).equals(partie.bateauSelectionne)) {
-                    partie.bateauSelectionne.moveBoat(c);
-                    partie.ajouterBateauxDejaDeplaces(partie.bateauSelectionne);
+                } else if (casesDispo.contains(c) && partie.getBateauSelectionne().getMoveAvailable() > 0 && partie.getBateauxDejaDeplaces().get(partie.getBateauxDejaDeplaces().size() - 1).equals(partie.getBateauSelectionne())) {
+                    partie.getBateauSelectionne().moveBoat(c);
+                    partie.ajouterBateauxDejaDeplaces(partie.getBateauSelectionne());
                    /* if (c.isPhare()) {
                         partie.getMap().prendPhare(c, partie.getCurrentPlayer());
                     }*/
-                } else if (casesDispo.contains(c) && partie.bateauSelectionne.getMoveAvailable() > 0 && !(partie.getBateauxDejaDeplaces().contains(partie.bateauSelectionne))) {
+                } else if (casesDispo.contains(c) && partie.getBateauSelectionne().getMoveAvailable() > 0 && !(partie.getBateauxDejaDeplaces().contains(partie.getBateauSelectionne()))) {
                     partie.getBateauxDejaDeplaces().get(partie.getBateauxDejaDeplaces().size() - 1).setMoveAvailable(0);
-                    partie.bateauSelectionne.moveBoat(c);
-                    partie.ajouterBateauxDejaDeplaces(partie.bateauSelectionne);
+                    partie.getBateauSelectionne().moveBoat(c);
+                    partie.ajouterBateauxDejaDeplaces(partie.getBateauSelectionne());
                    /* if (c.isPhare()) {
                         partie.getMap().prendPhare(c, partie.getCurrentPlayer());
                     }*/
@@ -157,7 +157,7 @@ public class Controller {
     }
 
     public void changerCanon() {
-        partie.bateauSelectionne.setCanonSelectionne(3 - partie.bateauSelectionne.getCanonSelectionne());
+        partie.getBateauSelectionne().setCanonSelectionne(3 - partie.getBateauSelectionne().getCanonSelectionne());
 
     }
 
@@ -276,7 +276,7 @@ public class Controller {
 
     public List<Action> getPossibleActions() {
         ArrayList<Action> actions = new ArrayList<>();
-        Boat boat = this.partie.bateauSelectionne;
+        Boat boat = this.partie.getBateauSelectionne();
         // potential of the seletected boat
         ArrayList<Case> cases = new ArrayList<>();
 

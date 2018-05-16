@@ -26,7 +26,7 @@ public class Partie implements Serializable {
     private Player currentPlayer;
 
     //Bateau sélectionné par le joueur
-    public Boat bateauSelectionne;
+    private Boat bateauSelectionne;
     private boolean isAnyBateauSelectionne = false;
 
     //Pour savoir si la partie est finie
