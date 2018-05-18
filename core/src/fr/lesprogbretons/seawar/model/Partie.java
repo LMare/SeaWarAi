@@ -65,7 +65,6 @@ public class Partie implements Serializable {
 
 
     public Object clone() {
-
         Partie clone = new Partie();
         clone.actions = this.actions;//cloner action ?
         clone.map = (Grille) this.map.clone();
