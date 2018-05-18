@@ -1,7 +1,7 @@
 package fr.lesprogbretons.seawar.model.boat;
 
-import fr.lesprogbretons.seawar.model.cases.Case;
 import fr.lesprogbretons.seawar.model.Player;
+import fr.lesprogbretons.seawar.model.cases.Case;
 
 import java.io.Serializable;
 

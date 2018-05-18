@@ -18,15 +18,16 @@ import java.util.ArrayList;
  */
 public class Grille implements Serializable {
 
-   
+
     //Bateaux
     ArrayList<Boat> bateaux1;
     ArrayList<Boat> bateaux2;
     //Joueurs
-    private Player joueur1 = new Player(1);
-    private Player joueur2 = new IAAleatoire(2,"IAAleatoire",bateaux2);
+//    private Player joueur1 = new Player(1);
+    private Player joueur1 = new IAAleatoire(1, "IAAleatoire1", bateaux1);
+    private Player joueur2 = new IAAleatoire(2, "IAAleatoire2", bateaux2);
 
-    
+
     //Cases de la Grille
     Case tableau[][];
     private int hauteur;
@@ -45,6 +46,7 @@ public class Grille implements Serializable {
         bateaux2 = new ArrayList<>();
         //
         //
+        joueur1.setBoats(bateaux1);
         joueur2.setBoats(bateaux2);
         tableau = new Case[hauteur][largeur];
 
@@ -60,17 +62,14 @@ public class Grille implements Serializable {
 
 
     public Object clone() {
-        Grille clone=new Grille(this.hauteur,this.largeur);
-        clone.setHauteur(this.getHauteur());
-        clone.setLargeur(this.getLargeur());
-        clone.setTableau(new Case[hauteur][largeur]);
-        ArrayList<Boat> nav1 = new ArrayList<Boat>();
-        for (Boat nav:bateaux1) {
+        Grille clone = new Grille(this.getHauteur(), this.getLargeur());
+        ArrayList<Boat> nav1 = new ArrayList<>();
+        for (Boat nav : bateaux1) {
             nav1.add((Boat) nav.clone());
         }
         clone.setBateaux1(nav1);
-        ArrayList<Boat> nav2 = new ArrayList<Boat>();
-        for (Boat nav:bateaux2) {
+        ArrayList<Boat> nav2 = new ArrayList<>();
+        for (Boat nav : bateaux2) {
             nav2.add((Boat) nav.clone());
         }
         clone.setBateaux2(nav2);
@@ -78,7 +77,8 @@ public class Grille implements Serializable {
         clone.setJoueur2((Player) this.joueur2.clone(nav2));
         for (int i = 0; i < hauteur; i++) {
             for (int j = 0; j < largeur; j++) {
-               clone.tableau[i][j] = (Case) this.tableau[i][j].clone();
+                Case clone1 = (Case) this.tableau[i][j].clone();
+                clone.tableau[i][j] = clone1;
             }
         }
         return clone;
@@ -155,7 +155,7 @@ public class Grille implements Serializable {
         joueur1.addBoat(b);
         setBateaux1(tab);
         joueur1.setBoats(tab);
-        
+
     }
 
     public void ajouterBateauJoueur2(Boat b) {
@@ -163,8 +163,8 @@ public class Grille implements Serializable {
         tab.add(b);
         joueur2.addBoat(b);
         setBateaux2(tab);
-        
-        
+
+
     }
 
     /*******************************************************/
