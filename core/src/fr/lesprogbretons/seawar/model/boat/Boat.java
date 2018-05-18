@@ -36,7 +36,7 @@ public abstract class Boat implements Serializable {
     private int secCD = 0;
 
     //Joueur possédant ce bateau
-    private Player joueur;
+    protected Player joueur;
 
     public boolean isEstBloque() {
         return estBloque;
