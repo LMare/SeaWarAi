@@ -215,7 +215,7 @@ public class Controller {
 
                 logger.debug(Thread.currentThread().getName() + ":"
                         + "Aucune action choisie mais action mémorisée");
-                action = calcul.getActionChoice();
+                action = ia.getMemorizedAction();
 
 
             } else {
