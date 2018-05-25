@@ -331,10 +331,10 @@ public class Partie implements Serializable {
                     map.getBateaux2().get(i).setShootTaken(0);
                 }
 
-            } else {
+            } else { //si joueur 2
                 for (int k = 0; k < map.getBateaux2().size(); k++) {
                     if (map.getBateaux2().get(k).getPosition().isPhare()) {
-                        map.prendPhare(map.getBateaux1().get(k).getPosition(), joueur2);
+                        map.prendPhare(map.getBateaux2().get(k).getPosition(), joueur2);
                     }
                 }
                 for (int i = 0; i < map.getBateaux2().size(); i++) {
