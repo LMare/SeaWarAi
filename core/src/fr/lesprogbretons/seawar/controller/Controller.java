@@ -117,7 +117,7 @@ public class Controller {
                         partie.getMap().prendPhare(c, partie.getCurrentPlayer());
                     }*/
                 } else {
-                    partie.setAnyBateauSelectionne(false);
+                    partie.setAnyBateauSelectionne(true);
                 }
 
             }
