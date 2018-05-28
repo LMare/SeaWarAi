@@ -70,7 +70,11 @@ public class Partie implements Serializable {
         clone.map = (Grille) this.map.clone();
         clone.joueur1 = clone.map.getJoueur1();
         clone.joueur2 = clone.map.getJoueur2();
-        clone.currentPlayer = this.currentPlayer;
+        if(currentPlayer==joueur1) {
+            clone.currentPlayer = clone.getJoueur1();
+        } else {
+            clone.currentPlayer = clone.getJoueur2();
+        }
         if (this.bateauSelectionne != null) {
             if (this.bateauSelectionne.getJoueur() == joueur1) {
                 clone.bateauSelectionne = clone.map.getBateaux1()
